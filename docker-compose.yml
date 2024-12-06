@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  proxy:
+    image: haproxy:lts-alpine
+    restart: always
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - "4001:443"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro
+
+  libretranslate:
+    image: libretranslate/libretranslate
+    restart: always
+    volumes:
+      - libretranslate_data:/home
+
+volumes:
+  libretranslate_data:
